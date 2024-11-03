@@ -1,0 +1,15 @@
+<a href="/users/">{{ "Return to Home page"}}
+</a>
+<body>
+{% if access %}
+<div style="background-color: rgb({{note.colorR}}, {{note.colorG}}, {{note.colorB}});">
+<h1>{{ note.noteTitle }}</h1>
+<ul>{{ note.noteText }}<br>
+<br>
+{{"Publication date: " }}{{ note.pubDate }}<br>
+</div>
+{% else %}
+<br>{{"You do not have access to this note"}}
+{% endif %}
+</body>
+

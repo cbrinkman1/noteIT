@@ -1,0 +1,41 @@
+<body>
+<a href="/users/">{{ "Return to Home page"}}
+</a>
+{% if username %}
+<h1>{{ "Create a new Note:" }}</h1>
+<form action="" method="POST"> {% csrf_token %} 
+      <input type="text" class="field" placeholder="Title" name="title"><br>
+      <input type="text" class="field" placeholder="Text" name="note" size=60 required><br>
+      <p>Category:</p>
+      <input type="radio" id="Meetings or Presentations" name="category" value="Meetings or Presentations">
+      <label for="Meetings or Presentations">Meetings or Presentations</label><br>
+      <input type="radio" id="Development" name="category" value="Development">
+      <label for="Development">Development</label><br>
+      <input type="radio" id="Infrastructure" name="category" value="Infrastructure">
+      <label for="Infrastructure">Infrastructure</label><br>
+      <input type="radio" id="Security" name="category" value="Security">
+      <label for="Security">Security</label><br>
+      <input type="radio" id="Training" name="category" value="Training">
+      <label for="Training">Training</label>
+      
+      <br>
+      
+      <p>Color:</p>
+      <input type="radio" id="red" name="color" value="red">
+      <label for="red">Red</label><br>
+      <input type="radio" id="yellow" name="color" value="yellow">
+      <label for="yellow">Yellow</label><br>
+      <input type="radio" id="green" name="color" value="green">
+      <label for="green">Green</label><br>
+      <input type="radio" id="blue" name="Blue" value="blue">
+      <label for="blue">Blue</label><br>
+      <input type="radio" id="pink" name="color" value="pink">
+      <label for="pink">Pink</label><br>
+      <br>
+      <button type="submit" class="btn">Add</button>
+</form>
+{% else %}
+<br>{{"Please " }} <a href="{% url 'login'%}">{{ "Login" }} </a> {{" before posting anything"}}
+{% endif %}
+
+</body>
