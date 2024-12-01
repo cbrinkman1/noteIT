@@ -1,12 +1,19 @@
-<body>
-<a href="/users/">{{ "Return to Home page"}}
-</a>
-    <h1>{{ "Login:" }}</h1>
-    <form action="" method="POST"> {% csrf_token %} 
-    
-        {{loginform.as_p}}
-        
-        <input type="submit" value="Login"/>
-    
-    </form>
-</body>
+<html>
+    <head>
+        <title>NoteIT Login</title>
+    </head>
+    <body>
+        <header>
+            <a href="/users/">{{ "Return to Home page"}}</a>
+        </header>
+        <main>
+            <h1>{{ "Login:" }}</h1>
+            <form action="" method="POST"> {% csrf_token %}
+                
+                {{loginform.as_p}}
+                
+                <input type="submit" value="Login"/>
+            </form>
+        </main>
+    </body>
+</html>

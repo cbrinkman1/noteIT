@@ -1,12 +1,17 @@
-<body>
-<a href="/users/">{{ "Return to Home page"}}
-</a>
-    <h1>{{ "Register a New User:" }}</h1>
-    <form action="" method="POST"> {% csrf_token %} 
-    
-        {{registerform.as_p}}
-        
-        <input type="submit" value="Register"/>
-    
-    </form>
-</body>
+<html>
+    <head>
+        <title>NoteIT New User</title>
+    </head>
+    <body>
+        <header>
+            <a href="/users/">{{ "Return to Home page"}}</a>
+        </header>
+        <main>
+            <h1>{{ "Register a New User:" }}</h1>
+            <form action="" method="POST"> {% csrf_token %}
+                {{registerform.as_p}}
+                <input type="submit" value="Register"/>
+            </form>
+        </main>
+    </body>
+</html>

@@ -11,6 +11,13 @@ from django.utils import timezone
 
 
 def index(request):
+    if request.method == 'POST':
+        if "Delete All Notes" in request.POST:
+            if request.user.is_authenticated:
+                lastest_notes_list = Note.objects.filter(creator=request.user)
+                for note in lastest_notes_list:
+                    note.delete()
+
     username = None
     lastest_notes_list = None
     if request.user.is_authenticated:
@@ -23,13 +30,49 @@ def index(request):
     
 def detail(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
+    if request.method == 'POST':
+        if "Delete Note" in request.POST:
+            note.delete()
+            return redirect("/users/")
+        elif "Update Category" in request.POST:
+            note.category = request.POST["category"]
+            note.save()
+        elif "Update Color" in request.POST:
+            color = request.POST["color"]
+            colorR = 0
+            colorG = 0
+            colorB = 0
+            if color == "red":
+                colorR = 255
+                colorG = 116
+                colorB = 108
+            elif color == "yellow":
+                colorR = 255
+                colorG = 255
+            elif color == "green":
+                colorR = 50
+                colorG = 205
+                colorB = 50
+            elif color == "blue":
+                colorR = 137
+                colorG = 207
+                colorB = 240
+            elif color == "pink":
+                colorR = 255
+                colorG = 192
+                colorB = 203
+            note.colorR = colorR
+            note.colorG = colorG
+            note.colorB = colorB
+            note.save()
+
     access = False
     if request.user.is_authenticated:
         if request.user == note.creator:
             access = True
     context = {"note":note, "access":access}
     return render(request, "users/detail.html", context)
-    
+
 def create(request):
     if request.method == 'POST':
         noteTitle = request.POST["title"]
@@ -40,6 +83,8 @@ def create(request):
         colorB = 0
         if color == "red":
             colorR = 255
+            colorG = 116
+            colorB = 108
         elif color == "yellow":
             colorR = 255
             colorG = 255
@@ -52,9 +97,9 @@ def create(request):
             colorG = 207
             colorB = 240
         elif color == "pink":
-            colorR = 238
-            colorG = 142
-            colorR = 223
+            colorR = 255
+            colorG = 192
+            colorB = 203
         category = request.POST["category"]
         if request.user.is_authenticated:
             username = request.user.username
@@ -67,7 +112,7 @@ def create(request):
         username = request.user.username
     context = {"username":username}
     return render(request, "users/create.html", context)
-    
+
 def login(request):
     form = LoginForm()
     if request.method == 'POST':
@@ -85,7 +130,16 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("/users/")
-    
+
+def user(request):
+    username = None
+    email = None
+    if request.user.is_authenticated:
+        username = request.user.username
+        email = request.user.email
+    context = {"username": username, "email": email}
+    return render(request, "users/userView.html", context)
+
 def new(request):
     form = CreateUserForm()
     if request.method == 'POST':
